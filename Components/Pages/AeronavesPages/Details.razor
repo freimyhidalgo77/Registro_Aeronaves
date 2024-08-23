@@ -1,0 +1,58 @@
+﻿@page "/Aeronaves/Details/"
+@page "/Aeronaves/Details/{AeronavesId:int}"
+@inject AeronaveService aeronaveService
+@inject NavigationManager navigation
+
+<PageTitle> Detalles del aeronave </PageTitle>
+<div class="container">
+	<div class="card shadow-lg"></div>
+	@*Header*@
+	<div class="crad-header bg-primary text-white">
+		<h3><strong>Detalles aeronave</strong></h3>
+	</div>
+	@*Body*@
+	<div class="card-body">
+		<h5><strong>Detalles de la aeronave</strong></h5>
+		@if (aeronaves != null)
+		{
+			@*Datos*@
+			<div class="mb-1">
+				<p class="mb-0">Tipo aeronave: @aeronaves.TipoAeronave</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Aerolinea: @aeronaves.Aerolinea</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Matricula: @aeronaves.Matricula</p>
+				<div class="mb-1">
+				</div>
+				<p class="mb-0">Capacidad: @aeronaves.capacidad</p>
+			</div>
+		}
+	</div>
+	@*Footer*@
+	<div class="card-footer">
+		<button type="button" class="btn btn-info text-white bi bi-arrow-90deg-left" @onclick="Volver"> Volver</button>
+	</div>
+</div>
+
+
+@code {
+
+	[Parameter]
+
+	public int AeronavesId { get; set; }
+	public Aeronaves aeronaves { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		aeronaves = await aeronaveService.Buscar(AeronavesId);
+	}
+
+	public void Volver()
+	{
+		navigation.NavigateTo("/Aeronaves/Index");
+	}
+
+
+}

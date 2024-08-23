@@ -1,0 +1,111 @@
+﻿@page "/Aeronaves/Index"
+@rendermode InteractiveServer
+@inject AeronaveService aeronaveService
+@inject NavigationManager navigation
+
+<PageTitle>Aeronaves</PageTitle>
+<div class="container">
+    <div class="card-header bg-danger text-white">
+        <h3 class="bi bi-airplane-fill"><strong> Registro de aeronaves</strong></h3>
+    </div>
+    <div class="row text-right">
+        <div class="col-md-3">
+            <label for="filtro" class="form-label"><strong>Filtrar por:</strong></label>
+            <InputSelect id="filtro" class="form-select" @bind-Value="filtro">
+                <option value="id">ID</option>
+                <option value="Tipo">TipoAeronave</option>
+                <option value="Aerolinea">Aerolinea</option>
+                <option value="Matricula">Matricula</option>
+            </InputSelect>
+        </div>
+        <div class="col-md-6">
+            <label for="valorFiltro" class="form-label"><strong>B&uacute;squeda:</strong></label>
+            <div class="input-group">
+                <InputText id="valorFiltro" @bind-Value="valorFiltro" class="form-control" placeholder="Buscar" />
+                <button @onclick="Buscar" class="btn btn-success bi bi-search" type="button"> Buscar</button>
+            </div>
+        </div>
+        <div class="text-left">
+            <a href="/Aeronaves/Create" class="btn btn-success bi bi-plus-square-fill"> Crear</a>
+        </div>
+    </div>
+
+    @*Body*@
+    <div class="card-body">
+        <table class="table table-light">
+            <thead class="table table-striped text-center table-bordered mt-3 bg-danger text-white">
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo Aeronave</th>
+                    <th>Aerolinea</th>
+                    <th>Matricula</th>
+                    <th>Capacidad</th>
+                    <th>Detalles</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var aeronave in aeronaves)
+                {
+                    <tr>
+                        <td class="text-center">@aeronave.AeronavesId</td>
+                        <td class="text-center">@aeronave.TipoAeronave</td>
+                        <td class="text-center">@aeronave.Aerolinea</td>
+                        <td class="text-center">@aeronave.Matricula</td>
+                        <td class="text-center">@aeronave.capacidad</td>
+                        <td class="text-center">
+                            <a href="/Aeronaves/Details/@aeronave.AeronavesId" class="btn btn-info text-white bi bi-eye"></a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/Aeronaves/Edit/@aeronave.AeronavesId" class="btn btn-secondary text-white bi bi-pencil-square"></a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/Aeronaves/Delete/@aeronave.AeronavesId" class="btn btn-danger bi bi-trash"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    public List<Aeronaves> aeronaves = new List<Aeronaves>();
+    public string filtro = "id";
+    public string valorFiltro = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        aeronaves = await aeronaveService.Listar(a => true);
+    }
+
+    public async Task Buscar()
+    {
+        if (!string.IsNullOrWhiteSpace(valorFiltro))
+        {
+            switch (filtro)
+            {
+                case "id":
+                    if (int.TryParse(valorFiltro, out int id))
+                    {
+                        aeronaves = await aeronaveService.Listar(t => t.AeronavesId == id);
+                    }
+                    break;
+                case "Matricula":
+                    aeronaves = await aeronaveService.Listar(t => t.Matricula.ToLower().Contains(valorFiltro.ToLower()));
+                    break;
+                case "Aerolinea":
+                    aeronaves = await aeronaveService.Listar(t => t.Aerolinea.ToLower().Contains(valorFiltro.ToLower()));
+                    break;
+                case "Tipo":
+                    aeronaves = await aeronaveService.Listar(t => t.TipoAeronave.ToLower().Contains(valorFiltro.ToLower()));
+                    break;
+            }
+        }
+        else
+        {
+            aeronaves = await aeronaveService.Listar(a => true);
+        }
+    }
+}

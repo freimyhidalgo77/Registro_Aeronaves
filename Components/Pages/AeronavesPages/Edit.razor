@@ -1,0 +1,89 @@
+﻿@page "/Aeronaves/Edit/{AeronavesId:int}"
+@rendermode InteractiveServer
+@inject AeronaveService aeronavesService
+@inject NavigationManager navigation
+
+<PageTitle>Modificar aeronave</PageTitle>
+<EditForm Model="aeronaves" OnValidSubmit="Modificar">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			<div class="card-header bg-secondary text-white">
+				<h1><strong>Modificar aeronave</strong></h1>
+			</div>
+			<div class="card-body">
+				@*Datos*@
+				<label for="id" class="form-label"<strong>ID</strong></label>
+				<InputNumber id="id" class="form-control" @bind-Value="aeronaves.AeronavesId" readonly></InputNumber>
+
+				<label for="TipoAeronave" class="form-label"><strong>Tipo aeronaves</strong></label>
+				<InputText id="TipoAeronave" class="form-control" @bind-Value="aeronaves.TipoAeronave"> </InputText>
+				<ValidationMessage For="@(()=> aeronaves.TipoAeronave)"></ValidationMessage>
+
+				<label for="Aeroliena" class="form-label"><strong>Aerolinea</strong></label>
+				<InputText id="Aerolinea" class="form-control" @bind-Value="aeronaves.Aerolinea"> </InputText>
+				<ValidationMessage For="@(()=> aeronaves.Aerolinea)"></ValidationMessage>
+
+
+				<label for="Matricula" class="form-label"><strong>Matricula</strong></label>
+				<InputText id="Matricula" class="form-control" @bind-Value="aeronaves.Matricula"> </InputText>
+				<ValidationMessage For="@(()=> aeronaves.Matricula)"></ValidationMessage>
+
+
+				<label for="capacidad" class="form-label"><strong>Capacidad</strong></label>
+				<InputNumber id="capacidad" class="form-control" @bind-Value="aeronaves.capacidad"> </InputNumber>
+				<ValidationMessage For="@(()=> aeronaves.capacidad)"></ValidationMessage>
+			</div>
+			<div class="card-footer">
+				<button type="button" class="btn btn-info text-white bi bi-arrow-90deg-left" @onclick="Volver"> Volver</button>
+				<button type="submit" class="btn btn-success bi bi-pencil-square"> Modificar</button>
+
+			</div>
+		</div>
+	</div>
+
+
+</EditForm>
+
+
+
+
+@code {
+
+	[Parameter]
+	public int AeronavesId { get; set; }
+	public Aeronaves aeronaves { get; set; } = new Aeronaves();
+	public bool Repetida { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (AeronavesId > 0)
+		{
+			aeronaves = await aeronavesService.Buscar(AeronavesId);
+		}
+	}
+
+	public async Task<bool> Validar()
+	{
+		var existe = await aeronavesService.ValidarMatricula(aeronaves.Matricula);
+		Repetida = existe == null;
+		return Repetida;
+	}
+
+	public async Task Modificar()
+	{
+		if (!await Validar())
+		{
+			await aeronavesService.Guardar(aeronaves);
+			aeronaves = new Aeronaves();
+			Volver();
+		}
+	}
+
+	public void Volver()
+	{
+		navigation.NavigateTo("/Aeronaves/Index");
+	}
+
+
+}
