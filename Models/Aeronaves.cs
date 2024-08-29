@@ -14,7 +14,7 @@ namespace RegistroAeronaves.Models
 		public string Aerolinea { get; set; }
 
 		[Required(ErrorMessage = "Campo matricula obligatorio")]
-
+		    
 		public string Matricula { get; set; }
 
 		[Required(ErrorMessage = "Campo capacidad obligatorio")]
