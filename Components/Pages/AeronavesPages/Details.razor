@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="card shadow-lg"></div>
 	@*Header*@
-	<div class="crad-header bg-primary text-white">
+	<div class="card-header bg-primary text-white">
 		<h3><strong>Detalles aeronave</strong></h3>
 	</div>
 	@*Body*@
@@ -17,6 +17,15 @@
 		{
 			@*Datos*@
 			<div class="mb-1">
+				<p class="mb-0">Aeronave ID: @aeronaves.AeronavesId</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Fecha: @aeronaves.Fecha</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Identificador: @aeronaves.Identificador</p>
+			</div>
+			<div class="mb-1">
 				<p class="mb-0">Tipo aeronave: @aeronaves.TipoAeronave</p>
 			</div>
 			<div class="mb-1">
@@ -24,17 +33,19 @@
 			</div>
 			<div class="mb-1">
 				<p class="mb-0">Matricula: @aeronaves.Matricula</p>
+			</div>
 				<div class="mb-1">
-				</div>
-				<p class="mb-0">Capacidad: @aeronaves.capacidad</p>
+				<p class="mb-0">Ruta: @aeronaves.ruta</p>
 			</div>
 		}
-	</div>
+	
 	@*Footer*@
 	<div class="card-footer">
 		<button type="button" class="btn btn-info text-white bi bi-arrow-90deg-left" @onclick="Volver"> Volver</button>
 	</div>
 </div>
+</div>
+
 
 
 @code {

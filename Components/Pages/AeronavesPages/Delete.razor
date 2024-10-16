@@ -6,28 +6,42 @@
 <PageTitle>Eliminar aeronaves</PageTitle>
 <EditForm Model="aeronaves" OnValidSubmit="EliminarAeronave">
 	<DataAnnotationsValidator />
-	<div class="card shadow-lg">
-		<div class="card-header bg-primary text-white"></div>
-		<h4><strong>Eliminar aeronave</strong></h4>
-		<div class="card-body"></div>
-		<h6><strong>&Eacute;tas seguro que quieres eliminar esta aeronave?</strong></h6>
-		<div class="mb-1">
-			<p class="mb-0">AeronavesId: @aeronaves.AeronavesId </p>
-			<div class="mb-1"> 
-				<p class="mb-0">Matricula: @aeronaves.Matricula </p>
+	<div class="container">
+	    <div class="card shadow-lg">
+		    <div class="card-header bg-danger text-white">
+				<h4><strong>Eliminar aeronave</strong></h4>
+			</div>
+		          <div class="card-body">
+		           <h6><strong>Est&aacute;s seguro que quieres eliminar esta aeronave?</strong></h6>
+
 				<div class="mb-1">
-					<p class="mb-0">Tipo aeronave: @aeronaves.TipoAeronave </p>
-					<div class="mb-1">
-					</div>
-					<p class="mb-0">Descripci&oacute;n: @aeronaves.TipoAeronave </p> 
+					<p class="mb-0">Aeronave ID: @aeronaves.AeronavesId</p>
 				</div>
-			</div> 
+				<div class="mb-1">
+					<p class="mb-0">Fecha: @aeronaves.Fecha</p>
+				</div>
+				<div class="mb-1">
+					<p class="mb-0">Identificador: @aeronaves.Identificador</p>
+				</div>
+				<div class="mb-1">
+					<p class="mb-0">Tipo aeronave: @aeronaves.TipoAeronave</p>
+				</div>
+				<div class="mb-1">
+					<p class="mb-0">Aerolinea: @aeronaves.Aerolinea</p>
+				</div>
+				<div class="mb-1">
+					<p class="mb-0">Matricula: @aeronaves.Matricula</p>
+				</div>
+				<div class="mb-1">
+					<p class="mb-0">Ruta: @aeronaves.ruta</p>
+				</div>
 			<div class="card-footer">
 				<button type="button" class="btn btn-info text-white bi bi-arrow-90deg-left" @onclick="Volver"> Volver</button>
 				<button type="button" class="btn btn-danger bi bi-trash" @onclick="EliminarAeronave"> Eliminar</button>
 			</div>
 		</div>
 	</div>
+    </div>
 
 </EditForm>
 

@@ -2,6 +2,7 @@
 using RegistroAeronaves.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RegistroAeronaves.Service
 {
@@ -66,8 +67,6 @@ namespace RegistroAeronaves.Service
 		{
 			return await _context.Aeronaves.AnyAsync(a => a.Matricula == aeronave);
 		}
-
-
 
 	}
 

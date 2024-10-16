@@ -13,7 +13,7 @@
             <label for="filtro" class="form-label"><strong>Filtrar por:</strong></label>
             <InputSelect id="filtro" class="form-select" @bind-Value="filtro">
                 <option value="id">ID</option>
-                <option value="Tipo">TipoAeronave</option>
+                <option value="Tipo">Tipo de Aeronave</option>
                 <option value="Aerolinea">Aerolinea</option>
                 <option value="Matricula">Matricula</option>
             </InputSelect>
@@ -22,24 +22,26 @@
             <label for="valorFiltro" class="form-label"><strong>B&uacute;squeda:</strong></label>
             <div class="input-group">
                 <InputText id="valorFiltro" @bind-Value="valorFiltro" class="form-control" placeholder="Buscar" />
-                <button @onclick="Buscar" class="btn btn-success bi bi-search" type="button"> Buscar</button>
+                <button @onclick="Buscar" class="btn btn-outline-success bi bi-search" type="button"> Buscar</button>
             </div>
         </div>
-        <div class="text-left">
-            <a href="/Aeronaves/Create" class="btn btn-success bi bi-plus-square-fill"> Crear</a>
+        <div class="col-md-3 d-flex align-items-end justify-content-md-end mt-3 mt-md-0">
+            <a href="/Aeronaves/Create" class="btn btn-outline-success bi bi-plus-square-fill"> Crear</a>
         </div>
     </div>
 
     @*Body*@
     <div class="card-body">
-        <table class="table table-light">
+        <table class="table table-light table-bordered">
             <thead class="table table-striped text-center table-bordered mt-3 bg-danger text-white">
                 <tr>
-                    <th>ID</th>
+                    <th>Aeronave ID</th>
+                    <th>Fecha</th>
+                    <th>Identificador</th>
                     <th>Tipo Aeronave</th>
                     <th>Aerolinea</th>
                     <th>Matricula</th>
-                    <th>Capacidad</th>
+                    <th>Ruta</th>
                     <th>Detalles</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>
@@ -50,18 +52,20 @@
                 {
                     <tr>
                         <td class="text-center">@aeronave.AeronavesId</td>
+                        <td class="text-center">@aeronave.Fecha.ToShortDateString()</td>
+                        <td class="text-center">@aeronave.Identificador</td>
                         <td class="text-center">@aeronave.TipoAeronave</td>
                         <td class="text-center">@aeronave.Aerolinea</td>
                         <td class="text-center">@aeronave.Matricula</td>
-                        <td class="text-center">@aeronave.capacidad</td>
+                        <td class="text-center">@aeronave.ruta</td>
                         <td class="text-center">
-                            <a href="/Aeronaves/Details/@aeronave.AeronavesId" class="btn btn-info text-white bi bi-eye"></a>
+                            <a href="/Aeronaves/Details/@aeronave.AeronavesId" class="btn btn-outline-info bi bi-eye"></a>
                         </td>
                         <td class="text-center">
-                            <a href="/Aeronaves/Edit/@aeronave.AeronavesId" class="btn btn-secondary text-white bi bi-pencil-square"></a>
+                            <a href="/Aeronaves/Edit/@aeronave.AeronavesId" class="btn btn-outline-warning bi bi-pencil-square"></a>
                         </td>
                         <td class="text-center">
-                            <a href="/Aeronaves/Delete/@aeronave.AeronavesId" class="btn btn-danger bi bi-trash"></a>
+                            <a href="/Aeronaves/Delete/@aeronave.AeronavesId" class="btn btn-outline-danger bi bi-trash"></a>
                         </td>
                     </tr>
                 }
