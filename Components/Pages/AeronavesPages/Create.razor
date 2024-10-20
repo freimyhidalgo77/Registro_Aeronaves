@@ -55,6 +55,13 @@
 @code {
 	public Aeronaves aeronaves { get; set; } = new Aeronaves();
 
+
+   protected override async Task OnInitializedAsync()
+	{
+		aeronaves.Fecha = DateTime.Now;
+	}
+
+
 	public async Task<bool> Validar()
 	{
 		return await aeronaveService.ValidarMatricula(aeronaves.TipoAeronave);
